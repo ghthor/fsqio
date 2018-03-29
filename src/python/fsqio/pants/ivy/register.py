@@ -41,7 +41,7 @@ class JarDependencyGlobalManagementSetup(GlobalClasspathTaskMixin, JarDependency
   def execute(self):
     self._resolve_default_target()
 
-    all_targets = set(self.context.targets() | self.bag_target_closure)
+    all_targets = set(set(self.context.targets()) | set(self.bag_target_closure))
     jar_libs = [t for t in all_targets if isinstance(t, JarLibrary)]
     targets = set(g.managed_dependencies for g in jar_libs if g.managed_dependencies is not None)
     for library in jar_libs:
@@ -111,7 +111,7 @@ class IvyGlobalResolve(GlobalClasspathTaskMixin, IvyResolve):
   # all nodes in the graph, whether they are connected to the target_roots context or not.
   def execute(self):
     executor = self.create_java_executor()
-    targets = sorted(set(self.context.targets()) | self.bag_target_closure)
+    targets = sorted(set(self.context.targets()) | set(self.bag_target_closure))
     compile_classpath = self.context.products.get_data(
       'compile_classpath',
       init_func=ClasspathProducts.init_func(self.get_options().pants_workdir)

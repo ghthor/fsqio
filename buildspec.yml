@@ -1,0 +1,21 @@
+version: 0.2
+    
+phases:
+  install:
+    commands:
+      - python --version
+      - apt-get update -y
+      - python --version
+  pre_build:
+    commands:
+      - echo pre_build
+  build:
+    commands:
+      - uname -a
+      - ./pants buildgen
+      - git diff --exit-code || exit "$?"
+      - "./pants compile src::"
+      - "./pants test test::"
+  post_build:
+    commands:
+      - echo post_build

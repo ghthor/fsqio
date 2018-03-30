@@ -3,19 +3,17 @@ version: 0.2
 phases:
   install:
     commands:
-      - python --version
-      - apt-get update -y
-      - python --version
+      - "./pants resolve.ivy"
   pre_build:
     commands:
-      - echo pre_build
+      - "./pants buildgen"
+      - git diff --exit-code || exit "$?"
   build:
     commands:
-      - uname -a
-      - ./pants buildgen
-      - git diff --exit-code || exit "$?"
-      - "./pants compile src::"
+      - "./pants --no-compile-zinc-use-nailgun compile src:: test::"
+      - "mkdir -p /mongod-testdata"
+      - "mongod --dbpath /mongod-testdata &"
       - "./pants test test::"
   post_build:
     commands:
-      - echo post_build
+      - pkill mongod

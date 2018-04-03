@@ -10,7 +10,7 @@ phases:
       - git diff --exit-code || exit "$?"
   build:
     commands:
-      - "./pants --no-compile-zinc-use-nailgun compile src:: test::"
+      - "./pants compile src:: test::"
       - "mkdir -p /mongod-testdata"
       - "mongod --dbpath /mongod-testdata &"
       - "./pants test test::"

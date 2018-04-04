@@ -17,3 +17,9 @@ phases:
   post_build:
     commands:
       - pkill mongod
+
+cache:
+  paths:
+    - "/root/.cache/**/*"
+    - ".pants.d/**/*"
+    - ".local_artifact_cache/**/*"

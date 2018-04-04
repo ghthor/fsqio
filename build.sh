@@ -7,7 +7,7 @@ set +a
 ./pants buildgen
 git diff --exit-code || exit "$?"
 ./pants compile src:: test::
-mkdir -p /mongod-testdata
-mongod --dbpath /mongod-testdata &
+mkdir -p $TMPDIR/mongod-testdata
+mongod --dbpath $TMPDIR/mongod-testdata &
 ./pants test test::
 pkill mongod

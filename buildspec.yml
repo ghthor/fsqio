@@ -3,7 +3,8 @@ version: 0.2
 phases:
   install:
     commands:
-      - "./pants resolve.ivy"
+      - free -h
+      - "./pants --jvm-run-jvm-options='' resolve.ivy"
   pre_build:
     commands:
       - "./pants buildgen"

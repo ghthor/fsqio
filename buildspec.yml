@@ -1,4 +1,9 @@
 version: 0.2
+
+env:
+  variables:
+    PANTS_CONFIG_OVERRIDE: "['pants.ini', 'pants-codebuild-ci.ini']"
+  parameter-store: {}
     
 phases:
   install:
